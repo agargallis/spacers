@@ -59,7 +59,7 @@ export default function SeasonDiagram({ stats, standing }) {
         <div className="w-full flex-1 space-y-4">
           <div className="flex items-center justify-between border-b border-[color:var(--border)] pb-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-[color:var(--text-faint)]">
-              Θέση
+              Θεση
             </span>
             <span className="flex items-baseline gap-2">
               <span className="font-[var(--font-display)] text-2xl font-black accent-gradient-text">

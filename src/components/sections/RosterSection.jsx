@@ -69,7 +69,7 @@ export default function RosterSection() {
     <Section id="roster">
       <SectionHeading
         eyebrow="Squad"
-        title="Ρόστερ"
+        title="Ρόστερ."
       />
 
       {loading ? (

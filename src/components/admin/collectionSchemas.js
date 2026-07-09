@@ -44,6 +44,7 @@ export const collectionSchemas = {
       { key: 'opponent', label: 'Αντίπαλος', type: 'text', required: true },
       { key: 'datetime', label: 'Ημερομηνία & ώρα', type: 'datetime', required: true },
       { key: 'venue', label: 'Γήπεδο', type: 'text' },
+      { key: 'mapUrl', label: 'Google Maps link (προαιρετικό)', type: 'text' },
       { key: 'home', label: 'Εντός έδρας', type: 'checkbox' },
       { key: 'status', label: 'Κατάσταση', type: 'select', options: [
         { value: 'scheduled', label: 'Προγραμματισμένος' },
@@ -51,7 +52,7 @@ export const collectionSchemas = {
         { value: 'finished', label: 'Ολοκληρώθηκε' },
       ] },
     ],
-    defaults: { opponent: '', datetime: new Date().toISOString(), venue: '', home: true, status: 'scheduled' },
+    defaults: { opponent: '', datetime: new Date().toISOString(), venue: '', mapUrl: '', home: true, status: 'scheduled' },
   },
 
   results: {

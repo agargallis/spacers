@@ -21,7 +21,7 @@ export default function SponsorsSection() {
           animate="show"
           className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
         >
-          {(sponsors ?? []).map((s) => (
+          {(sponsors ?? []).slice(0, 2).map((s) => (
             <SponsorCard key={s.id} sponsor={s} />
           ))}
         </motion.div>

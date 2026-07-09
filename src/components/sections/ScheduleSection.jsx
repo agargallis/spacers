@@ -14,7 +14,12 @@ export default function ScheduleSection() {
   const { data: results } = useTeamResource(getResults, { initialData: [] });
   const meta = useActiveTeamMeta();
 
-  const recent = (results ?? []).slice(0, 3);
+  // No venue in the results feed → default home games to the club's court,
+  // away games to the opponent's home, so the map link is still useful.
+  const recent = (results ?? []).slice(0, 3).map((r) => ({
+    ...r,
+    venue: r.venue || (r.home ? meta.homeVenue : `Έδρα ${r.opponent}`),
+  }));
 
   return (
     <Section id="schedule">

@@ -20,6 +20,7 @@ export const teams = {
     accent2: '#e8b33a',
     league: 'Basketaki The League',
     profileUrl: 'https://www.basketaki.com/teams/spacers-athens/profile',
+    homeVenue: 'Κλειστό Γυμναστήριο Γαλατσίου',
   },
   beta: {
     id: 'spacers-beta',
@@ -33,5 +34,6 @@ export const teams = {
     accent2: '#a3e635',
     league: 'Basketaki The League',
     profileUrl: 'https://www.basketaki.com/teams/spacers-beta/profile',
+    homeVenue: 'Κλειστό Γυμναστήριο Γαλατσίου',
   },
 };

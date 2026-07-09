@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Badge from '../ui/Badge';
 import { fadeUp } from '../../utils/motion';
 import { formatShortDate, formatTime } from '../../utils/format';
+import { venueMapUrl } from '../../utils/venue';
 import { useActiveTeamMeta } from '../../store/useTeamStore';
 
 export default function MatchCard({ match }) {
@@ -27,35 +28,48 @@ export default function MatchCard({ match }) {
         </Badge>
       </div>
 
-      <div className="mt-4 flex items-center justify-center gap-4">
-        <img src={meta.logo} alt="Spacers" className="h-12 w-12 shrink-0 object-contain" />
-        <span className="font-[var(--font-display)] text-sm font-black text-[color:var(--text-faint)]">
+      <div className="mt-4 flex items-start justify-center gap-4">
+        <div className="flex w-20 flex-col items-center gap-2">
+          <img src={meta.logo} alt="Spacers" className="h-12 w-12 shrink-0 object-contain" />
+          <span className="text-center text-xs font-semibold leading-tight">Spacers</span>
+        </div>
+        <span className="mt-3 font-[var(--font-display)] text-sm font-black text-[color:var(--text-faint)]">
           VS
         </span>
-        {match.opponentLogo ? (
-          <img
-            src={match.opponentLogo}
-            alt={match.opponent}
-            onError={(e) => (e.currentTarget.style.visibility = 'hidden')}
-            className="h-12 w-12 shrink-0 object-contain"
-          />
-        ) : (
-          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl glass text-sm font-bold text-[color:var(--text-dim)]">
-            {match.opponent.slice(0, 1)}
+        <div className="flex w-20 flex-col items-center gap-2">
+          {match.opponentLogo ? (
+            <img
+              src={match.opponentLogo}
+              alt={match.opponent}
+              onError={(e) => (e.currentTarget.style.visibility = 'hidden')}
+              className="h-12 w-12 shrink-0 object-contain"
+            />
+          ) : (
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl glass text-sm font-bold text-[color:var(--text-dim)]">
+              {match.opponent.slice(0, 1)}
+            </span>
+          )}
+          <span className="text-center text-xs font-semibold leading-tight text-[color:var(--text-dim)]">
+            {match.opponent}
           </span>
-        )}
-      </div>
-      <div className="mt-3 truncate text-center text-sm font-semibold text-[color:var(--text-dim)]">
-        {match.opponent}
+        </div>
       </div>
 
       {match.venue && (
-        <div className="mt-4 flex items-center gap-2 text-xs text-[color:var(--text-dim)]">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-accent">
-            <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" stroke="currentColor" strokeWidth="1.6" />
-            <circle cx="12" cy="10" r="2.4" stroke="currentColor" strokeWidth="1.6" />
-          </svg>
-          {match.venue}
+        <div className="mt-4 flex justify-center">
+          <a
+            href={venueMapUrl(match.venue, match.mapUrl)}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 text-center text-xs text-[color:var(--text-dim)] transition-colors hover:text-accent"
+            title="Άνοιγμα στον χάρτη"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0 text-accent">
+              <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" stroke="currentColor" strokeWidth="1.6" />
+              <circle cx="12" cy="10" r="2.4" stroke="currentColor" strokeWidth="1.6" />
+            </svg>
+            {match.venue}
+          </a>
         </div>
       )}
     </motion.article>

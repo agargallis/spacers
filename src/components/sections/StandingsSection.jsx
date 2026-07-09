@@ -53,7 +53,7 @@ export default function StandingsSection() {
     <Section id="standings">
       <SectionHeading
         eyebrow={meta.league}
-        title="Βαθμολογία"
+        title="Βαθμολογία."
       />
 
       {/* Tournament selector — a single dropdown, newest first & default */}

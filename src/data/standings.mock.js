@@ -1,0 +1,223 @@
+/* AUTO-GENERATED from basketaki.com profiles. Real league data. */
+export const standingsMock = {
+  main: [
+  {
+    "pos": 1,
+    "team": "Brothers United",
+    "logo": "https://basketaki-web.b-cdn.net/teams/brothers-united.png",
+    "played": 7,
+    "wins": 7,
+    "losses": 0,
+    "pointsFor": 732,
+    "pointsAgainst": 530,
+    "points": 14,
+    "isOurs": false
+  },
+  {
+    "pos": 2,
+    "team": "Γκουρούδες",
+    "logo": "https://basketaki-web.b-cdn.net/teams/gouroudes.png",
+    "played": 7,
+    "wins": 6,
+    "losses": 1,
+    "pointsFor": 707,
+    "pointsAgainst": 502,
+    "points": 13,
+    "isOurs": false
+  },
+  {
+    "pos": 3,
+    "team": "Pink Paper",
+    "logo": "https://basketaki-web.b-cdn.net/teams/rbd-pink-paper.png",
+    "played": 7,
+    "wins": 4,
+    "losses": 3,
+    "pointsFor": 524,
+    "pointsAgainst": 528,
+    "points": 11,
+    "isOurs": false
+  },
+  {
+    "pos": 4,
+    "team": "Kantzablanca",
+    "logo": "https://basketaki-web.b-cdn.net/teams/kantzablanca.png",
+    "played": 7,
+    "wins": 4,
+    "losses": 3,
+    "pointsFor": 471,
+    "pointsAgainst": 487,
+    "points": 11,
+    "isOurs": false
+  },
+  {
+    "pos": 5,
+    "team": "Spacers Athens",
+    "logo": "https://basketaki-web.b-cdn.net/teams/spacers-athens.png",
+    "played": 7,
+    "wins": 4,
+    "losses": 3,
+    "pointsFor": 518,
+    "pointsAgainst": 488,
+    "points": 11,
+    "isOurs": true
+  },
+  {
+    "pos": 6,
+    "team": "Lions (By The Motion Perfomance Lab)",
+    "logo": "https://basketaki-web.b-cdn.net/teams/lions-by-the-motion.png",
+    "played": 7,
+    "wins": 2,
+    "losses": 5,
+    "pointsFor": 491,
+    "pointsAgainst": 494,
+    "points": 9,
+    "isOurs": false
+  },
+  {
+    "pos": 7,
+    "team": "Dionysos Escorts",
+    "logo": "https://basketaki-web.b-cdn.net/teams/dionysos-escorts.png",
+    "played": 7,
+    "wins": 1,
+    "losses": 6,
+    "pointsFor": 414,
+    "pointsAgainst": 625,
+    "points": 8,
+    "isOurs": false
+  },
+  {
+    "pos": 8,
+    "team": "Roido bc",
+    "logo": "https://basketaki-web.b-cdn.net/teams/roido-bc.png",
+    "played": 7,
+    "wins": 0,
+    "losses": 7,
+    "pointsFor": 397,
+    "pointsAgainst": 600,
+    "points": 7,
+    "isOurs": false
+  }
+],
+  beta: [
+  {
+    "pos": 1,
+    "team": "Rawdoggers",
+    "logo": "https://basketaki-web.b-cdn.net/teams/rawdoggers.png",
+    "played": 9,
+    "wins": 9,
+    "losses": 0,
+    "pointsFor": 609,
+    "pointsAgainst": 499,
+    "points": 18,
+    "isOurs": false
+  },
+  {
+    "pos": 2,
+    "team": "E.D.U. Legends",
+    "logo": "https://basketaki-web.b-cdn.net/teams/edu-legends.png",
+    "played": 9,
+    "wins": 7,
+    "losses": 2,
+    "pointsFor": 619,
+    "pointsAgainst": 429,
+    "points": 16,
+    "isOurs": false
+  },
+  {
+    "pos": 3,
+    "team": "Beerokoillers",
+    "logo": "https://basketaki-web.b-cdn.net/teams/beerokoillers.png",
+    "played": 9,
+    "wins": 6,
+    "losses": 3,
+    "pointsFor": 545,
+    "pointsAgainst": 501,
+    "points": 15,
+    "isOurs": false
+  },
+  {
+    "pos": 4,
+    "team": "Piccadilly BC",
+    "logo": "https://basketaki-web.b-cdn.net/teams/piccadilly-bc.png",
+    "played": 9,
+    "wins": 6,
+    "losses": 3,
+    "pointsFor": 482,
+    "pointsAgainst": 393,
+    "points": 15,
+    "isOurs": false
+  },
+  {
+    "pos": 5,
+    "team": "Brick City",
+    "logo": "https://basketaki-web.b-cdn.net/teams/brick-city.png",
+    "played": 9,
+    "wins": 5,
+    "losses": 4,
+    "pointsFor": 489,
+    "pointsAgainst": 519,
+    "points": 14,
+    "isOurs": false
+  },
+  {
+    "pos": 6,
+    "team": "Deadpool BC",
+    "logo": "https://basketaki-web.b-cdn.net/teams/deadpool-bc.png",
+    "played": 9,
+    "wins": 5,
+    "losses": 4,
+    "pointsFor": 514,
+    "pointsAgainst": 512,
+    "points": 14,
+    "isOurs": false
+  },
+  {
+    "pos": 7,
+    "team": "Spacers Beta",
+    "logo": "https://basketaki-web.b-cdn.net/teams/spacers-beta.png",
+    "played": 9,
+    "wins": 3,
+    "losses": 6,
+    "pointsFor": 492,
+    "pointsAgainst": 483,
+    "points": 12,
+    "isOurs": true
+  },
+  {
+    "pos": 8,
+    "team": "Los Angeles Pit-Bulls",
+    "logo": "https://basketaki-web.b-cdn.net/teams/los-angeles-pitbulls.png",
+    "played": 9,
+    "wins": 1,
+    "losses": 8,
+    "pointsFor": 500,
+    "pointsAgainst": 578,
+    "points": 10,
+    "isOurs": false
+  },
+  {
+    "pos": 9,
+    "team": "Ρέμπελοι",
+    "logo": "https://basketaki-web.b-cdn.net/teams/rebeloi.png",
+    "played": 9,
+    "wins": 1,
+    "losses": 8,
+    "pointsFor": 430,
+    "pointsAgainst": 624,
+    "points": 10,
+    "isOurs": false
+  },
+  {
+    "pos": 10,
+    "team": "Atlanta Slots",
+    "logo": "https://basketaki-web.b-cdn.net/teams/atlanta-slots.png",
+    "played": 9,
+    "wins": 2,
+    "losses": 7,
+    "pointsFor": 349,
+    "pointsAgainst": 491,
+    "points": 9,
+    "isOurs": false
+  }
+],
+};

@@ -1,0 +1,308 @@
+@import 'tailwindcss';
+
+/*
+  Global brand fonts (from the noobs project — Greek + Latin both covered).
+  Athena is primary everywhere; Salma Pro / Salma Pro Narrow are secondary.
+  `swap` keeps text visible during load; Athena is preloaded in index.html so
+  there's no flash on refresh.
+*/
+@font-face {
+  font-family: 'Athena';
+  src: url('/fonts/athena.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Salma Pro';
+  src: url('/fonts/salma-pro.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Salma Pro Narrow';
+  src: url('/fonts/salma-pro-narrow.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  Per-team theming is driven by CSS variables on <html data-team="...">.
+  Components reference the semantic accent tokens (via Tailwind's arbitrary
+  values or the utility classes below), so switching activeTeam re-skins the
+  ENTIRE UI without any per-component conditionals.
+*/
+
+@theme {
+  --font-display: 'Athena', 'Salma Pro Narrow', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Athena', 'Salma Pro', 'Inter', system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Shared surfaces (both teams live on near-black) */
+  --bg: #08090d;
+  --bg-2: #0d0f16;
+  --surface: #14161d;
+  --surface-2: #1b1e27;
+  --border: #262a35;
+  --text: #f4f6fb;
+  --text-dim: #a5adbd;
+  --text-faint: #6b7385;
+
+  /* Accent tokens — overridden per team below. Defaults to Main. */
+  --accent: #2f6bff;
+  --accent-strong: #1e50d6;
+  --accent-2: #e8b33a;
+  --accent-2-strong: #c8942a;
+  --accent-rgb: 47 107 255;
+  --accent-2-rgb: 232 179 58;
+  --glow: rgba(47, 107, 255, 0.35);
+  --grid-line: rgba(47, 107, 255, 0.07);
+}
+
+html[data-team='main'] {
+  --accent: #2f6bff;
+  --accent-strong: #1e50d6;
+  --accent-2: #e8b33a;
+  --accent-2-strong: #c8942a;
+  --accent-rgb: 47 107 255;
+  --accent-2-rgb: 232 179 58;
+  --glow: rgba(47, 107, 255, 0.35);
+  --grid-line: rgba(47, 107, 255, 0.07);
+}
+
+html[data-team='beta'] {
+  --accent: #2fd662;
+  --accent-strong: #22b04f;
+  --accent-2: #a3e635;
+  --accent-2-strong: #84cc16;
+  --accent-rgb: 47 214 98;
+  --accent-2-rgb: 163 230 53;
+  --glow: rgba(47, 214, 98, 0.32);
+  --grid-line: rgba(47, 214, 98, 0.07);
+}
+
+* {
+  border-color: var(--border);
+}
+
+/* Native form controls don't inherit font-family — force the brand font. */
+input,
+select,
+textarea,
+button,
+optgroup {
+  font-family: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Smoothly cross-fade accent-driven properties on team switch */
+  transition: none;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Ambient background: subtle team-tinted radial glows + faint grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 80% -10%, var(--glow), transparent 60%),
+    radial-gradient(50rem 40rem at -10% 20%, rgba(var(--accent-2-rgb) / 0.1), transparent 55%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+  transition: background 600ms ease;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  mask-image: radial-gradient(70% 60% at 50% 0%, #000 40%, transparent 100%);
+  transition: background-image 600ms ease;
+}
+
+/* ---- Semantic utility helpers ---- */
+.text-accent {
+  color: var(--accent);
+}
+.text-accent-2 {
+  color: var(--accent-2);
+}
+.bg-accent {
+  background-color: var(--accent);
+}
+.border-accent {
+  border-color: var(--accent);
+}
+.ring-accent {
+  --tw-ring-color: var(--accent);
+}
+
+.glass {
+  background: color-mix(in oklab, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--border);
+}
+
+.card {
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+.accent-gradient-text {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.accent-ring {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent),
+    0 0 40px -12px var(--glow);
+}
+
+.btn-accent {
+  position: relative;
+  background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+  color: #fff;
+  box-shadow: 0 8px 24px -10px var(--glow), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+.btn-accent:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 14px 34px -10px var(--glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.btn-accent:active {
+  transform: translateY(0);
+}
+
+/* Animated conic sheen for the hero crest */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-viewport {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track {
+  animation: marquee var(--marquee-duration, 26s) linear infinite;
+}
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@keyframes loading-slide {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(360%);
+  }
+}
+.loading-bar {
+  animation: loading-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3.2s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--accent) 45%, var(--surface-2));
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 40%, transparent);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

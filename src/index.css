@@ -1,29 +1,15 @@
 @import 'tailwindcss';
 
 /*
-  Global brand fonts (from the noobs project — Greek + Latin both covered).
-  Athena is primary everywhere; Salma Pro / Salma Pro Narrow are secondary.
-  `swap` keeps text visible during load; Athena is preloaded in index.html so
-  there's no flash on refresh.
+  Global brand font: AC Varela (Aka-Acid, Greek + Latin both covered).
+  Applied EVERYWHERE via the tokens below. `swap` keeps text visible during
+  load; the file is preloaded in index.html so there's no flash on refresh.
+  Inter is the fallback so no glyph is ever missing.
 */
 @font-face {
-  font-family: 'Athena';
-  src: url('/fonts/athena.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Salma Pro';
-  src: url('/fonts/salma-pro.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Salma Pro Narrow';
-  src: url('/fonts/salma-pro-narrow.otf') format('opentype');
-  font-weight: 500;
+  font-family: 'AC Varela';
+  src: url('/fonts/acvarela.ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -36,8 +22,8 @@
 */
 
 @theme {
-  --font-display: 'Athena', 'Salma Pro Narrow', 'Inter', system-ui, sans-serif;
-  --font-sans: 'Athena', 'Salma Pro', 'Inter', system-ui, sans-serif;
+  --font-display: 'AC Varela', 'Inter', system-ui, sans-serif;
+  --font-sans: 'AC Varela', 'Inter', system-ui, sans-serif;
 }
 
 :root {

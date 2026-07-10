@@ -20,7 +20,7 @@ export default function ResultRow({ result }) {
     >
       <div className="min-w-0">
         <div className="text-xs text-[color:var(--text-faint)]">
-          {formatShortDate(result.datetime)} · {result.home ? 'Εντός' : 'Εκτός'}
+          {formatShortDate(result.datetime)}
           {result.category ? ` · ${result.category}` : ''}
         </div>
         <div className="mt-2 flex items-center gap-3">
@@ -44,9 +44,13 @@ export default function ResultRow({ result }) {
 
       <div className="text-right">
         <div className="font-[var(--font-display)] text-2xl font-bold tabular-nums sm:text-3xl">
-          <span style={{ color: won ? meta.accent : 'var(--text)' }}>{result.scoreFor}</span>
-          <span className="mx-1 text-[color:var(--text-faint)]">–</span>
-          <span className="text-[color:var(--text-dim)]">{result.scoreAgainst}</span>
+          <span className={result.scoreFor >= result.scoreAgainst ? 'font-black text-[color:var(--text)]' : 'font-semibold text-[color:var(--text-faint)]'}>
+            {result.scoreFor}
+          </span>
+          <span className="mx-1.5 text-[color:var(--text-faint)]">–</span>
+          <span className={result.scoreAgainst >= result.scoreFor ? 'font-black text-[color:var(--text)]' : 'font-semibold text-[color:var(--text-faint)]'}>
+            {result.scoreAgainst}
+          </span>
         </div>
       </div>
     </motion.article>

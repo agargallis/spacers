@@ -10,7 +10,7 @@ import { seedContent, COLLECTIONS } from '../data/seed';
  * Shape: { standings:{main,beta}, upcoming:{...}, results:{...},
  *          players:{...}, sponsors:{...}, videos:{...} }
  */
-const STORAGE_KEY = 'spacers-content-v5';
+const STORAGE_KEY = 'spacers-content-v6';
 
 const listeners = new Set();
 const notify = () => listeners.forEach((fn) => fn());

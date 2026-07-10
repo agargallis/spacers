@@ -84,9 +84,6 @@ export default function NextMatchHero({ match, loading }) {
 
         {/* Countdown */}
         <div className="flex flex-col items-center gap-4 lg:items-end">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--text-faint)]">
-            Αντίστροφη μέτρηση
-          </span>
           <CountdownTiles targetIso={match.datetime} />
           <Button as="button" onClick={() => scrollToSection('schedule')} variant="outline" size="sm">
             Όλο το πρόγραμμα

@@ -14,9 +14,7 @@ export default function VideoCard({ video, onPlay }) {
       {/* Score header (on top) */}
       <div className="border-b border-[color:var(--border)] p-4">
         <div className="flex items-center justify-between text-xs">
-          <span className="text-[color:var(--text-faint)]">
-            {formatShortDate(video.date)} · {video.home ? 'Εντός' : 'Εκτός'}
-          </span>
+          <span className="text-[color:var(--text-faint)]">{formatShortDate(video.date)}</span>
           {/* pulsing result indicator: green = win, red = loss */}
           <span className="relative flex h-3 w-3" title={video.won ? 'Νίκη' : 'Ήττα'}>
             <span

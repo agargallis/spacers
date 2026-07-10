@@ -19,9 +19,20 @@ export default function ResultsSection() {
   const { data: summary } = useTeamResource(getResultsSummary);
   const meta = useActiveTeamMeta();
   const [showAll, setShowAll] = useState(false);
+  const [query, setQuery] = useState('');
 
   const list = results ?? [];
   const preview = list.slice(0, PREVIEW);
+
+  // Accent-insensitive search (Google-like): match opponent or category.
+  const norm = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const q = norm(query.trim());
+  const filtered = q ? list.filter((r) => norm(r.opponent).includes(q) || norm(r.category).includes(q)) : list;
+
+  const closeModal = () => {
+    setShowAll(false);
+    setQuery('');
+  };
 
   return (
     <Section id="results">
@@ -69,13 +80,37 @@ export default function ResultsSection() {
         </>
       )}
 
-      {/* All results — modal with blurred backdrop */}
-      <Modal open={showAll} onClose={() => setShowAll(false)} title={`Όλα τα αποτελέσματα · ${meta.shortName}`} size="lg">
-        <motion.div variants={stagger(0.02)} initial="hidden" animate="show" className="space-y-3">
-          {list.map((r) => (
-            <ResultRow key={r.id} result={r} />
-          ))}
-        </motion.div>
+      {/* All results — modal with blurred backdrop + live search */}
+      <Modal open={showAll} onClose={closeModal} title={`Όλα τα αποτελέσματα · ${meta.shortName}`} size="lg">
+        {/* Search bar (sticky) */}
+        <div className="sticky top-0 z-10 -mx-6 -mt-5 mb-4 border-b border-[color:var(--border)] bg-[color:var(--surface)] px-6 pb-4 pt-5">
+          <div className="relative">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[color:var(--text-faint)]">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8" />
+              <path d="m20 20-3.5-3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Αναζήτηση αντιπάλου…"
+              autoFocus
+              className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-2)] py-2.5 pl-10 pr-4 text-sm text-[color:var(--text)] placeholder:text-[color:var(--text-faint)] transition-colors focus:border-accent focus:outline-none focus:ring-1 ring-accent"
+            />
+          </div>
+        </div>
+
+        {filtered.length ? (
+          <motion.div key={q} variants={stagger(0.02)} initial="hidden" animate="show" className="space-y-3">
+            {filtered.map((r) => (
+              <ResultRow key={r.id} result={r} />
+            ))}
+          </motion.div>
+        ) : (
+          <p className="py-10 text-center text-sm text-[color:var(--text-dim)]">
+            Καμία αντιστοιχία για «{query}».
+          </p>
+        )}
       </Modal>
     </Section>
   );

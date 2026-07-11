@@ -21,6 +21,8 @@ export const teams = {
     league: 'Basketaki The League',
     profileUrl: 'https://www.basketaki.com/teams/spacers-athens/profile',
     homeVenue: 'Κλειστό Γυμναστήριο Γαλατσίου',
+    // Real "Team Stats" from the basketaki profile.
+    season: { wins: 17, losses: 11, pointsFor: 1842, pointsAgainst: 1656 },
   },
   beta: {
     id: 'spacers-beta',
@@ -35,5 +37,7 @@ export const teams = {
     league: 'Basketaki The League',
     profileUrl: 'https://www.basketaki.com/teams/spacers-beta/profile',
     homeVenue: 'Κλειστό Γυμναστήριο Γαλατσίου',
+    // Real "Team Stats" from the basketaki profile.
+    season: { wins: 9, losses: 20, pointsFor: 1602, pointsAgainst: 1618 },
   },
 };

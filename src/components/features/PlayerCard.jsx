@@ -32,10 +32,15 @@ export default function PlayerCard({ player, onClick }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--surface)] via-transparent to-transparent" />
       </div>
 
-      <div className="p-3 text-center">
-        <h3 className="text-sm font-semibold leading-tight text-balance" title={player.name}>
-          {player.name}
-        </h3>
+      <div className="p-3">
+        <div className="flex min-h-[3.75rem] items-center justify-center">
+          <h3
+            className="line-clamp-3 text-center text-sm font-semibold leading-tight text-balance"
+            title={player.name}
+          >
+            {player.name}
+          </h3>
+        </div>
       </div>
     </button>
   );

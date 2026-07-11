@@ -1,5 +1,4 @@
 import { contentRepository } from './contentRepository';
-import { teams } from '../data/teams';
 import { resolve, assertTeam } from './_client';
 
 const byDateAsc = (a, b) => new Date(a.datetime) - new Date(b.datetime);
@@ -37,7 +36,7 @@ export async function getNextMatch(team) {
     opponent: last.opponent,
     opponentLogo: last.opponentLogo,
     home: last.home,
-    venue: last.venue || (last.home ? teams[team].homeVenue : `Έδρα ${last.opponent}`),
+    venue: last.venue || 'Έδρα',
     finished: true,
     scoreFor: last.scoreFor,
     scoreAgainst: last.scoreAgainst,

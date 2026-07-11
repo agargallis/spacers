@@ -235,6 +235,21 @@ body::after {
   }
 }
 
+@keyframes intro-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  55% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(360%);
+  }
+}
+.intro-sweep {
+  animation: intro-sweep 1.25s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
 @keyframes loading-slide {
   0% {
     transform: translateX(-120%);

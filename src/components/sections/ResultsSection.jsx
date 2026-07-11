@@ -8,7 +8,8 @@ import Spinner from '../ui/Spinner';
 import Modal from '../ui/Modal';
 import Button from '../ui/Button';
 import { useTeamResource } from '../../hooks/useTeamResource';
-import { getResults, getResultsSummary } from '../../services/resultsService';
+import { getResults } from '../../services/resultsService';
+import { getSeasonStats } from '../../services/teamService';
 import { stagger } from '../../utils/motion';
 import { useActiveTeamMeta } from '../../store/useTeamStore';
 
@@ -16,7 +17,7 @@ const PREVIEW = 5;
 
 export default function ResultsSection() {
   const { data: results, loading, activeTeam } = useTeamResource(getResults, { initialData: [] });
-  const { data: summary } = useTeamResource(getResultsSummary);
+  const { data: summary } = useTeamResource(getSeasonStats);
   const meta = useActiveTeamMeta();
   const [showAll, setShowAll] = useState(false);
   const [query, setQuery] = useState('');

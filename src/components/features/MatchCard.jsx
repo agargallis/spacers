@@ -55,23 +55,37 @@ export default function MatchCard({ match }) {
         </div>
       </div>
 
-      {match.venue && (
-        <div className="mt-4 flex justify-center">
-          <a
-            href={venueMapUrl(match.venue, match.mapUrl)}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-center text-xs text-[color:var(--text-dim)] transition-colors hover:text-accent"
-            title="Άνοιγμα στον χάρτη"
-          >
+      {match.venue &&
+        (() => {
+          const mapUrl = match.venue === 'Έδρα' && !match.mapUrl ? null : venueMapUrl(match.venue, match.mapUrl);
+          const Pin = (
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0 text-accent">
               <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" stroke="currentColor" strokeWidth="1.6" />
               <circle cx="12" cy="10" r="2.4" stroke="currentColor" strokeWidth="1.6" />
             </svg>
-            {match.venue}
-          </a>
-        </div>
-      )}
+          );
+          return (
+            <div className="mt-4 flex justify-center">
+              {mapUrl ? (
+                <a
+                  href={mapUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-center text-xs text-[color:var(--text-dim)] transition-colors hover:text-accent"
+                  title="Άνοιγμα στον χάρτη"
+                >
+                  {Pin}
+                  {match.venue}
+                </a>
+              ) : (
+                <span className="inline-flex items-center gap-2 text-center text-xs text-[color:var(--text-dim)]">
+                  {Pin}
+                  {match.venue}
+                </span>
+              )}
+            </div>
+          );
+        })()}
     </motion.article>
   );
 }

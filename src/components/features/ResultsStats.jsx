@@ -13,11 +13,10 @@ export default function ResultsStats({ summary }) {
 
   return (
     <div className="card p-6">
-      {/* Point totals */}
-      <div className="grid grid-cols-3 gap-4">
-        <Metric label="Αγώνες" value={summary.played} />
-        <Metric label="Πόντοι υπέρ" value={summary.pointsFor} accent />
-        <Metric label="Πόντοι κατά" value={summary.pointsAgainst} />
+      {/* Point totals (from the basketaki Team Stats widget) */}
+      <div className="grid grid-cols-2 gap-4">
+        <Metric label="Πόντοι που σκόραρε" value={summary.pointsFor} accent />
+        <Metric label="Πόντοι που δέχτηκε" value={summary.pointsAgainst} />
       </div>
 
       {/* Games history bar chart */}

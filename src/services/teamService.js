@@ -1,5 +1,6 @@
 import { teams, TEAM_KEYS } from '../data/teams';
 import { contentRepository } from './contentRepository';
+import { getLive } from './liveContent';
 import { resolve, assertTeam } from './_client';
 
 /** All teams (meta). */
@@ -13,31 +14,28 @@ export async function getTeam(team) {
   return resolve(teams[team], { latency: 80 });
 }
 
-/** Roster for the active team, top scorers first. */
+/** Roster for the active team, top scorers first (live from Supabase, else local). */
 export async function getRoster(team) {
   assertTeam(team);
-  const list = contentRepository
-    .getCollection('players', team)
-    .sort((a, b) => (b.ppg ?? 0) - (a.ppg ?? 0));
+  const list = [...(getLive(team, 'roster') ?? contentRepository.getCollection('players', team))].sort(
+    (a, b) => (b.ppg ?? 0) - (a.ppg ?? 0),
+  );
   return resolve(list);
 }
 
-/** Season aggregates for the active team, taken from its own standings row. */
+/** Real season aggregates (Team Stats): live from Supabase, else local. */
 export async function getSeasonStats(team) {
   assertTeam(team);
-  const ours = contentRepository.getCollection('standings', team).find((r) => r.isOurs);
-  if (!ours) {
-    return resolve({ played: 0, wins: 0, losses: 0, pointsFor: 0, pointsAgainst: 0, avgFor: 0, avgAgainst: 0, diff: 0 });
-  }
-  const played = ours.played || 0;
+  const s = getLive(team, 'stats') ?? teams[team].season;
+  const played = s.wins + s.losses;
   return resolve({
     played,
-    wins: ours.wins,
-    losses: ours.losses,
-    pointsFor: ours.pointsFor,
-    pointsAgainst: ours.pointsAgainst,
-    avgFor: played ? Math.round((ours.pointsFor / played) * 10) / 10 : 0,
-    avgAgainst: played ? Math.round((ours.pointsAgainst / played) * 10) / 10 : 0,
-    diff: ours.pointsFor - ours.pointsAgainst,
+    wins: s.wins,
+    losses: s.losses,
+    pointsFor: s.pointsFor,
+    pointsAgainst: s.pointsAgainst,
+    avgFor: played ? Math.round((s.pointsFor / played) * 10) / 10 : 0,
+    avgAgainst: played ? Math.round((s.pointsAgainst / played) * 10) / 10 : 0,
+    diff: s.pointsFor - s.pointsAgainst,
   });
 }

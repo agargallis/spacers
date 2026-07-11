@@ -1,20 +1,20 @@
 import { contentRepository } from './contentRepository';
+import { getLive } from './liveContent';
 import { resolve, assertTeam } from './_client';
 
 const byDateDesc = (a, b) => new Date(b.datetime) - new Date(a.datetime);
+const results = (team) => [...(getLive(team, 'results') ?? contentRepository.getCollection('results', team))];
 
 /** Past results for the active team, most recent first. */
 export async function getResults(team) {
   assertTeam(team);
-  const list = contentRepository.getCollection('results', team).sort(byDateDesc);
-  return resolve(list);
+  return resolve(results(team).sort(byDateDesc));
 }
 
 /** The most recent result, or null. */
 export async function getLatestResult(team) {
   assertTeam(team);
-  const latest = contentRepository.getCollection('results', team).sort(byDateDesc)[0] ?? null;
-  return resolve(latest);
+  return resolve(results(team).sort(byDateDesc)[0] ?? null);
 }
 
 /** Aggregates over the full results history (mirrors basketaki team stats). */

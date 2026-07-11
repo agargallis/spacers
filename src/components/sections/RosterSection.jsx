@@ -75,9 +75,9 @@ export default function RosterSection() {
       {loading ? (
         <Spinner label="Φόρτωση ρόστερ…" />
       ) : (
-        <div className="relative">
-          <Arrow dir="left" onClick={() => scroll(-1)} disabled={!canL} className="absolute -left-2 top-[38%] z-10 hidden -translate-y-1/2 sm:grid" />
-          <Arrow dir="right" onClick={() => scroll(1)} disabled={!canR} className="absolute -right-2 top-[38%] z-10 hidden -translate-y-1/2 sm:grid" />
+        <div className="relative sm:px-16">
+          <Arrow dir="left" onClick={() => scroll(-1)} disabled={!canL} className="absolute left-1 top-[38%] z-10 hidden -translate-y-1/2 sm:grid" />
+          <Arrow dir="right" onClick={() => scroll(1)} disabled={!canR} className="absolute right-1 top-[38%] z-10 hidden -translate-y-1/2 sm:grid" />
 
           <motion.div
             ref={trackRef}

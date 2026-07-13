@@ -8,7 +8,6 @@
 export const collectionSchemas = {
   standings: {
     label: 'Βαθμολογία',
-    icon: '🏆',
     columns: [
       { key: 'pos', label: '#' },
       { key: 'team', label: 'Ομάδα' },
@@ -33,7 +32,6 @@ export const collectionSchemas = {
 
   upcoming: {
     label: 'Πρόγραμμα',
-    icon: '📅',
     columns: [
       { key: 'datetime', label: 'Ημ/νία', render: (v) => new Date(v).toLocaleString('el-GR', { dateStyle: 'short', timeStyle: 'short' }) },
       { key: 'opponent', label: 'Αντίπαλος' },
@@ -57,7 +55,6 @@ export const collectionSchemas = {
 
   results: {
     label: 'Αποτελέσματα',
-    icon: '📊',
     columns: [
       { key: 'datetime', label: 'Ημ/νία', render: (v) => new Date(v).toLocaleDateString('el-GR') },
       { key: 'opponent', label: 'Αντίπαλος' },
@@ -76,7 +73,6 @@ export const collectionSchemas = {
 
   players: {
     label: 'Ρόστερ',
-    icon: '👕',
     columns: [
       { key: 'name', label: 'Όνομα' },
       { key: 'games', label: 'Αγ' },
@@ -95,7 +91,6 @@ export const collectionSchemas = {
 
   sponsors: {
     label: 'Χορηγοί',
-    icon: '🤝',
     columns: [
       { key: 'name', label: 'Όνομα' },
       { key: 'tier', label: 'Tier' },
@@ -115,7 +110,6 @@ export const collectionSchemas = {
 
   videos: {
     label: 'Video',
-    icon: '🎬',
     columns: [
       { key: 'date', label: 'Ημ/νία', render: (v) => new Date(v).toLocaleDateString('el-GR') },
       { key: 'opponent', label: 'Αντίπαλος' },

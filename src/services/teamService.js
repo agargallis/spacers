@@ -1,6 +1,7 @@
 import { teams, TEAM_KEYS } from '../data/teams';
 import { contentRepository } from './contentRepository';
 import { getLive } from './liveContent';
+import { resolveItems } from './overrides';
 import { resolve, assertTeam } from './_client';
 
 /** All teams (meta). */
@@ -17,9 +18,8 @@ export async function getTeam(team) {
 /** Roster for the active team, top scorers first (live from Supabase, else local). */
 export async function getRoster(team) {
   assertTeam(team);
-  const list = [...(getLive(team, 'roster') ?? contentRepository.getCollection('players', team))].sort(
-    (a, b) => (b.ppg ?? 0) - (a.ppg ?? 0),
-  );
+  const base = getLive(team, 'roster') ?? contentRepository.getCollection('players', team);
+  const list = [...resolveItems(team, 'roster', base)].sort((a, b) => (b.ppg ?? 0) - (a.ppg ?? 0));
   return resolve(list);
 }
 

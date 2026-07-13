@@ -1,9 +1,11 @@
 import { contentRepository } from './contentRepository';
 import { getLive } from './liveContent';
+import { resolveItems } from './overrides';
 import { resolve, assertTeam } from './_client';
 
 const byDateDesc = (a, b) => new Date(b.datetime) - new Date(a.datetime);
-const results = (team) => [...(getLive(team, 'results') ?? contentRepository.getCollection('results', team))];
+const results = (team) =>
+  [...resolveItems(team, 'results', getLive(team, 'results') ?? contentRepository.getCollection('results', team))];
 
 /** Past results for the active team, most recent first. */
 export async function getResults(team) {

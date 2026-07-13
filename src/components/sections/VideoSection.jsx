@@ -3,6 +3,8 @@ import Section from './Section';
 import SectionHeading from '../ui/SectionHeading';
 import VideoCard from '../features/VideoCard';
 import VideoPlayerModal from '../features/VideoPlayerModal';
+import Editable from '../admin/Editable';
+import AddButton from '../admin/AddButton';
 import Spinner from '../ui/Spinner';
 import { useTeamResource } from '../../hooks/useTeamResource';
 import { getVideos } from '../../services/videosService';
@@ -55,7 +57,9 @@ export default function VideoSection() {
             >
               {list.map((v) => (
                 <div key={v.id} className="w-full shrink-0 px-0.5">
-                  <VideoCard video={v} onPlay={onPlay} />
+                  <Editable collection="videos" schema="videos" item={v}>
+                    <VideoCard video={v} onPlay={onPlay} />
+                  </Editable>
                 </div>
               ))}
             </div>
@@ -82,6 +86,8 @@ export default function VideoSection() {
       ) : (
         <div className="card p-8 text-center text-[color:var(--text-dim)]">Δεν υπάρχουν διαθέσιμα video.</div>
       )}
+
+      <AddButton collection="videos" schema="videos" label="video" className="mt-6" />
 
       <VideoPlayerModal video={playing} onClose={() => setPlaying(null)} />
     </Section>

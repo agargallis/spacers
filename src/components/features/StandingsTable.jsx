@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useActiveTeamMeta } from '../../store/useTeamStore';
+import { useEditMode } from '../../store/useEditMode';
+import ItemControls from '../admin/ItemControls';
 
 const cols = [
   { key: 'pos', label: '#', className: 'w-10 text-center' },
@@ -15,6 +17,7 @@ const cols = [
 
 export default function StandingsTable({ rows = [] }) {
   const meta = useActiveTeamMeta();
+  const editMode = useEditMode((s) => s.editMode);
 
   return (
     <div className="overflow-x-auto rounded-2xl card">
@@ -29,6 +32,7 @@ export default function StandingsTable({ rows = [] }) {
                 {c.label}
               </th>
             ))}
+            {editMode && <th className="w-28 px-3 py-3.5" />}
           </tr>
         </thead>
         <tbody>
@@ -42,7 +46,7 @@ export default function StandingsTable({ rows = [] }) {
                 transition={{ delay: Math.min(i, 12) * 0.03, duration: 0.4 }}
                 className={`group border-t border-[color:var(--border)] transition-colors ${
                   row.isOurs ? 'relative' : 'hover:bg-[color:var(--surface-2)]/60'
-                }`}
+                } ${row._hidden ? 'opacity-40' : ''}`}
                 style={
                   row.isOurs
                     ? { background: `linear-gradient(90deg, rgb(var(--accent-rgb)/0.16), transparent 70%)` }
@@ -100,6 +104,11 @@ export default function StandingsTable({ rows = [] }) {
                     {row.points}
                   </span>
                 </td>
+                {editMode && (
+                  <td className="px-3 py-3.5 text-right">
+                    <ItemControls collection="standings" schema="standings" item={row} />
+                  </td>
+                )}
               </motion.tr>
             );
           })}

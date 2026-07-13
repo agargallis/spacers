@@ -1,141 +1,94 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { FiEdit2, FiEyeOff, FiRotateCcw, FiLogOut, FiExternalLink } from 'react-icons/fi';
+import HomePage from './HomePage';
+import Footer from '../components/layout/Footer';
 import AdminLogin from '../components/admin/AdminLogin';
-import CrudEditor from '../components/admin/CrudEditor';
+import TeamSwitcher from '../components/layout/TeamSwitcher';
 import Button from '../components/ui/Button';
-import Modal from '../components/ui/Modal';
-import { collectionSchemas, COLLECTION_ORDER } from '../components/admin/collectionSchemas';
-import { contentRepository } from '../services/contentRepository';
+import Spinner from '../components/ui/Spinner';
 import { useAdminAuth } from '../store/useAdminAuth';
+import { useEditMode } from '../store/useEditMode';
 
-const TEAM_TABS = [
-  { key: 'main', label: 'Main', color: '#2f6bff' },
-  { key: 'beta', label: 'Beta', color: '#2fd662' },
-];
-
+/**
+ * Admin = the exact live frontend rendered in edit mode. Every data item shows
+ * inline controls (custom · hide · reset-to-auto) via the <Editable> wrappers.
+ */
 export default function AdminPage() {
   const authed = useAdminAuth((s) => s.authed);
+  const loading = useAdminAuth((s) => s.loading);
+  const init = useAdminAuth((s) => s.init);
   const logout = useAdminAuth((s) => s.logout);
-  const [team, setTeam] = useState('main');
-  const [active, setActive] = useState('standings');
-  const [confirmReset, setConfirmReset] = useState(false);
+  const setEditMode = useEditMode((s) => s.setEditMode);
 
+  useEffect(() => {
+    init();
+  }, [init]);
+
+  useEffect(() => {
+    setEditMode(true);
+    return () => setEditMode(false);
+  }, [setEditMode]);
+
+  if (loading) {
+    return (
+      <div className="grid min-h-dvh place-items-center">
+        <Spinner label="Έλεγχος σύνδεσης…" />
+      </div>
+    );
+  }
   if (!authed) return <AdminLogin />;
-
-  const doReset = () => {
-    contentRepository.reset();
-    setConfirmReset(false);
-  };
 
   return (
     <div className="min-h-dvh">
-      {/* Top bar */}
-      <header className="sticky top-0 z-40 glass border-b border-[color:var(--border)]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 py-3">
+      {/* Admin bar */}
+      <header className="sticky top-0 z-[60] glass border-b border-[color:var(--border)]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 py-2.5">
+          {/* Left — premium Admin wordmark + hint */}
           <div className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent text-white font-bold">S</span>
-            <div>
-              <div className="font-[var(--font-display)] text-sm font-bold">Admin Dashboard</div>
-              <div className="text-[11px] text-[color:var(--text-faint)]">Spacers Content Manager</div>
+            <div className="flex items-center gap-2.5">
+              <span
+                className="grid h-9 w-9 place-items-center rounded-xl text-white shadow-md"
+                style={{ background: 'linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #000))' }}
+              >
+                <FiEdit2 className="text-base" />
+              </span>
+              <span className="leading-tight">
+                <span className="block font-[var(--font-display)] text-sm font-black tracking-wide">Admin</span>
+                <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--text-faint)]">
+                  Live edit
+                </span>
+              </span>
             </div>
+
+            <span className="hidden items-center gap-3 border-l border-[color:var(--border)] pl-3 text-[11px] text-[color:var(--text-faint)] lg:flex">
+              <span className="inline-flex items-center gap-1"><FiEdit2 /> Custom</span>
+              <span className="inline-flex items-center gap-1"><FiEyeOff /> Κρυφό</span>
+              <span className="inline-flex items-center gap-1"><FiRotateCcw /> Auto</span>
+            </span>
           </div>
-          <div className="flex items-center gap-2">
-            {/* Team switch */}
-            <div className="inline-flex rounded-full glass p-1">
-              {TEAM_TABS.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => setTeam(t.key)}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    team === t.key ? 'text-white' : 'text-[color:var(--text-dim)]'
-                  }`}
-                  style={team === t.key ? { background: t.color } : undefined}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-            <Button to="/" variant="ghost" size="sm">
-              Site
+
+          {/* Right — team switch (like the live site) + actions */}
+          <div className="flex items-center gap-2.5">
+            <TeamSwitcher className="!h-9 !w-9" />
+            <Button to="/" variant="ghost" size="sm" className="gap-1.5">
+              <FiExternalLink /> Site
             </Button>
-            <Button variant="ghost" size="sm" onClick={logout}>
-              Έξοδος
-            </Button>
+            <button
+              type="button"
+              onClick={logout}
+              title="Αποσύνδεση"
+              aria-label="Αποσύνδεση"
+              className="grid h-9 w-9 place-items-center rounded-lg text-[color:var(--text-dim)] ring-1 ring-[color:var(--border)] transition-colors hover:text-rose-400 hover:ring-rose-400/60"
+            >
+              <FiLogOut className="text-base" />
+            </button>
           </div>
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 py-6 lg:flex-row">
-        {/* Sidebar */}
-        <aside className="lg:w-56 shrink-0">
-          <nav className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
-            {COLLECTION_ORDER.map((key) => {
-              const s = collectionSchemas[key];
-              const isActive = key === active;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActive(key)}
-                  className={`flex shrink-0 items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-medium transition-all lg:w-full ${
-                    isActive
-                      ? 'bg-[color:rgb(var(--accent-rgb)/0.14)] text-accent accent-ring'
-                      : 'text-[color:var(--text-dim)] hover:bg-[color:var(--surface-2)]'
-                  }`}
-                >
-                  <span>{s.icon}</span>
-                  {s.label}
-                </button>
-              );
-            })}
-          </nav>
-
-          <div className="mt-6 hidden lg:block">
-            <button
-              onClick={() => setConfirmReset(true)}
-              className="w-full rounded-xl border border-[color:var(--border)] px-4 py-2.5 text-xs font-semibold text-[color:var(--text-faint)] hover:border-rose-500/50 hover:text-rose-300"
-            >
-              Επαναφορά δεδομένων
-            </button>
-          </div>
-        </aside>
-
-        {/* Content */}
-        <main className="flex-1 min-w-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${active}-${team}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-            >
-              <CrudEditor collection={active} team={team} />
-            </motion.div>
-          </AnimatePresence>
-        </main>
-      </div>
-
-      <Modal
-        open={confirmReset}
-        onClose={() => setConfirmReset(false)}
-        title="Επαναφορά δεδομένων"
-        footer={
-          <>
-            <Button variant="ghost" size="sm" onClick={() => setConfirmReset(false)}>
-              Ακύρωση
-            </Button>
-            <Button size="sm" className="!bg-rose-500 !text-white" onClick={doReset}>
-              Επαναφορά
-            </Button>
-          </>
-        }
-      >
-        <p className="text-sm text-[color:var(--text-dim)]">
-          Όλα τα δεδομένα (και για τα δύο τμήματα) θα επανέλθουν στις αρχικές τιμές.
-          Οι αλλαγές σου θα χαθούν.
-        </p>
-      </Modal>
+      {/* The real frontend, in edit mode */}
+      <HomePage />
+      <Footer />
     </div>
   );
 }

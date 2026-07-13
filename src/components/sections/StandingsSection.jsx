@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Section from './Section';
 import SectionHeading from '../ui/SectionHeading';
 import StandingsTable from '../features/StandingsTable';
+import AddButton from '../admin/AddButton';
 import Dropdown from '../ui/Dropdown';
 import Spinner from '../ui/Spinner';
 import { useTeamResource } from '../../hooks/useTeamResource';
@@ -78,6 +79,8 @@ export default function StandingsSection() {
           {loading ? <Spinner label="Φόρτωση βαθμολογίας…" /> : <StandingsTable rows={rows ?? []} />}
         </motion.div>
       </AnimatePresence>
+
+      {isCurrent && <AddButton collection="standings" schema="standings" label="ομάδα" className="mt-6" />}
 
       <p className="mt-4 text-center text-xs text-[color:var(--text-faint)]">
         Αγ = Αγώνες · Ν = Νίκες · Η = Ήττες · Υπ/Κτ = Πόντοι υπέρ/κατά · ± = Διαφορά ·

@@ -7,6 +7,7 @@ import IntroSplash from './components/layout/IntroSplash';
 import { useThemeSync } from './hooks/useThemeSync';
 import { useRepositorySync } from './store/useContentRevision';
 import { useLiveContentSync } from './services/liveContent';
+import { useOverridesSync } from './services/overrides';
 import HomePage from './pages/HomePage';
 import AdminPage from './pages/AdminPage';
 import LegalPage from './pages/LegalPage';
@@ -30,6 +31,7 @@ export default function App() {
   useThemeSync();
   useRepositorySync();
   useLiveContentSync();
+  useOverridesSync();
 
   const isAdmin = location.pathname.startsWith('/ndbajcksd');
 

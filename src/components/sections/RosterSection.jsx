@@ -4,6 +4,8 @@ import Section from './Section';
 import SectionHeading from '../ui/SectionHeading';
 import PlayerCard from '../features/PlayerCard';
 import PlayerModal from '../features/PlayerModal';
+import Editable from '../admin/Editable';
+import AddButton from '../admin/AddButton';
 import Spinner from '../ui/Spinner';
 import { useTeamResource } from '../../hooks/useTeamResource';
 import { getRoster } from '../../services/teamService';
@@ -90,12 +92,16 @@ export default function RosterSection() {
           >
             {(players ?? []).map((p) => (
               <motion.div key={p.id} data-card variants={fadeUp} className="w-40 shrink-0 snap-start sm:w-48">
-                <PlayerCard player={p} onClick={() => setSelected(p)} />
+                <Editable collection="roster" schema="players" item={p}>
+                  <PlayerCard player={p} onClick={() => setSelected(p)} />
+                </Editable>
               </motion.div>
             ))}
           </motion.div>
         </div>
       )}
+
+      <AddButton collection="roster" schema="players" label="παίκτη" className="mt-6" />
 
       <PlayerModal player={selected} onClose={() => setSelected(null)} />
     </Section>

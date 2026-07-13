@@ -7,12 +7,18 @@ import { useAdminAuth } from '../../store/useAdminAuth';
 
 export default function AdminLogin() {
   const login = useAdminAuth((s) => s.login);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (!login(password)) setError(true);
+    setBusy(true);
+    setError('');
+    const res = await login(email.trim(), password);
+    setBusy(false);
+    if (!res.ok) setError('Λάθος email ή κωδικός.');
   };
 
   return (
@@ -30,26 +36,37 @@ export default function AdminLogin() {
         <p className="mt-1 text-sm text-[color:var(--text-dim)]">Περιοχή διαχείρισης περιεχομένου</p>
 
         <Input
+          id="email"
+          type="email"
+          label=""
+          className="mt-6 text-left"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setError('');
+          }}
+          autoFocus
+          required
+        />
+        <Input
           id="password"
           type="password"
           label=""
-          className="mt-6 text-left"
-          placeholder="Κωδικός πρόσβασης"
+          className="mt-3 text-left"
+          placeholder="Κωδικός"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            setError(false);
+            setError('');
           }}
-          autoFocus
+          required
         />
-        {error && <p className="mt-2 text-xs text-rose-400">Λάθος κωδικός. Δοκίμασε ξανά.</p>}
+        {error && <p className="mt-2 text-xs text-rose-400">{error}</p>}
 
-        <Button as="button" type="submit" size="lg" className="mt-4 w-full">
-          Είσοδος
+        <Button as="button" type="submit" size="lg" className="mt-4 w-full" disabled={busy}>
+          {busy ? 'Σύνδεση…' : 'Είσοδος'}
         </Button>
-        <p className="mt-4 text-[11px] text-[color:var(--text-faint)]">
-          Prototype gate · θα αντικατασταθεί με Supabase auth
-        </p>
       </motion.form>
     </div>
   );

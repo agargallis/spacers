@@ -3,6 +3,7 @@ import Section from './Section';
 import NextMatchHero from '../features/NextMatchHero';
 import SeasonDiagram from '../features/SeasonDiagram';
 import ResultRow from '../features/ResultRow';
+import Editable from '../admin/Editable';
 import SectionHeading from '../ui/SectionHeading';
 import { useTeamResource } from '../../hooks/useTeamResource';
 import { getNextMatch } from '../../services/matchesService';
@@ -38,7 +39,11 @@ export default function OverviewSection() {
           <SectionHeading eyebrow="Πρόσφατα" title="Τελευταία αποτελέσματα." />
           <motion.div variants={stagger(0.07)} initial="hidden" animate="show" className="space-y-3">
             {recent.length ? (
-              recent.map((r) => <ResultRow key={r.id} result={r} />)
+              recent.map((r) => (
+                <Editable key={r.id} collection="results" schema="results" item={r}>
+                  <ResultRow result={r} />
+                </Editable>
+              ))
             ) : latest ? (
               <ResultRow result={latest} />
             ) : (

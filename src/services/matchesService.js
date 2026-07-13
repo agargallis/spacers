@@ -1,14 +1,18 @@
 import { contentRepository } from './contentRepository';
+import { getLive } from './liveContent';
+import { resolveItems } from './overrides';
 import { resolve, assertTeam } from './_client';
 
 const byDateAsc = (a, b) => new Date(a.datetime) - new Date(b.datetime);
 const byDateDesc = (a, b) => new Date(b.datetime) - new Date(a.datetime);
 
+const upcomingList = (team) =>
+  resolveItems(team, 'upcoming', getLive(team, 'upcoming') ?? contentRepository.getCollection('upcoming', team));
+
 /** Upcoming fixtures for the active team, soonest first. */
 export async function getUpcomingMatches(team) {
   assertTeam(team);
-  const list = contentRepository.getCollection('upcoming', team).sort(byDateAsc);
-  return resolve(list);
+  return resolve([...upcomingList(team)].sort(byDateAsc));
 }
 
 /**

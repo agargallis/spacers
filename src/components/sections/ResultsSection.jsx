@@ -4,6 +4,8 @@ import Section from './Section';
 import SectionHeading from '../ui/SectionHeading';
 import ResultRow from '../features/ResultRow';
 import ResultsStats from '../features/ResultsStats';
+import Editable from '../admin/Editable';
+import AddButton from '../admin/AddButton';
 import Spinner from '../ui/Spinner';
 import Modal from '../ui/Modal';
 import Button from '../ui/Button';
@@ -66,7 +68,9 @@ export default function ResultsSection() {
               className="space-y-3"
             >
               {preview.map((r) => (
-                <ResultRow key={r.id} result={r} />
+                <Editable key={r.id} collection="results" schema="results" item={r}>
+                  <ResultRow result={r} />
+                </Editable>
               ))}
             </motion.div>
           </AnimatePresence>
@@ -78,6 +82,8 @@ export default function ResultsSection() {
               </Button>
             </div>
           )}
+
+          <AddButton collection="results" schema="results" label="αποτέλεσμα" className="mt-6" />
         </>
       )}
 
@@ -104,7 +110,9 @@ export default function ResultsSection() {
         {filtered.length ? (
           <motion.div key={q} variants={stagger(0.02)} initial="hidden" animate="show" className="space-y-3">
             {filtered.map((r) => (
-              <ResultRow key={r.id} result={r} />
+              <Editable key={r.id} collection="results" schema="results" item={r}>
+                <ResultRow result={r} />
+              </Editable>
             ))}
           </motion.div>
         ) : (

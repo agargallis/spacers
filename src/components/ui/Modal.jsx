@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const sizes = { md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl' };
@@ -15,7 +16,10 @@ export default function Modal({ open, onClose, title, children, footer, size = '
     };
   }, [open, onClose]);
 
-  return (
+  // Portal to <body> so `position: fixed` escapes any transformed ancestor
+  // (Framer Motion parents use transforms, which would otherwise trap the modal
+  // inside the list and overlay it on the row's inline edit controls).
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -53,6 +57,7 @@ export default function Modal({ open, onClose, title, children, footer, size = '
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }

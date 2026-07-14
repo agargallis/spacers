@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { FiEdit2, FiEyeOff, FiRotateCcw, FiLogOut, FiExternalLink } from 'react-icons/fi';
+import { FiEdit2, FiEyeOff, FiRotateCcw, FiLogOut } from 'react-icons/fi';
 import HomePage from './HomePage';
 import Footer from '../components/layout/Footer';
 import AdminLogin from '../components/admin/AdminLogin';
 import TeamSwitcher from '../components/layout/TeamSwitcher';
-import Button from '../components/ui/Button';
 import Spinner from '../components/ui/Spinner';
 import { useAdminAuth } from '../store/useAdminAuth';
 import { useEditMode } from '../store/useEditMode';
@@ -70,9 +69,6 @@ export default function AdminPage() {
           {/* Right — team switch (like the live site) + actions */}
           <div className="flex items-center gap-2.5">
             <TeamSwitcher className="!h-9 !w-9" />
-            <Button to="/" variant="ghost" size="sm" className="gap-1.5">
-              <FiExternalLink /> Site
-            </Button>
             <button
               type="button"
               onClick={logout}

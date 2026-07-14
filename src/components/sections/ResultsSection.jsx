@@ -6,6 +6,7 @@ import ResultRow from '../features/ResultRow';
 import ResultsStats from '../features/ResultsStats';
 import Editable from '../admin/Editable';
 import AddButton from '../admin/AddButton';
+import EditableLeague from '../admin/EditableLeague';
 import Spinner from '../ui/Spinner';
 import Modal from '../ui/Modal';
 import Button from '../ui/Button';
@@ -40,7 +41,8 @@ export default function ResultsSection() {
   return (
     <Section id="results">
       <SectionHeading
-        eyebrow={meta.league}
+        id="results"
+        eyebrow={<EditableLeague />}
         title="Αποτελέσματα."
       />
 
@@ -83,7 +85,7 @@ export default function ResultsSection() {
             </div>
           )}
 
-          <AddButton collection="results" schema="results" label="αποτέλεσμα" className="mt-6" />
+          <AddButton collection="results" schema="results" label="αποτελέσματος" className="mt-6" />
         </>
       )}
 

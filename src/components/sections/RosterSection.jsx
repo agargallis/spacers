@@ -70,6 +70,7 @@ export default function RosterSection() {
   return (
     <Section id="roster">
       <SectionHeading
+        id="roster"
         eyebrow="Squad"
         title="Ρόστερ."
       />
@@ -88,7 +89,7 @@ export default function RosterSection() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
-            className="flex snap-x gap-4 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x gap-4 overflow-x-auto pt-3 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {(players ?? []).map((p) => (
               <motion.div key={p.id} data-card variants={fadeUp} className="w-40 shrink-0 snap-start sm:w-48">

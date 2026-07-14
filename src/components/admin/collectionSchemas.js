@@ -24,10 +24,11 @@ export const collectionSchemas = {
       { key: 'pointsFor', label: 'Πόντοι υπέρ', type: 'number' },
       { key: 'pointsAgainst', label: 'Πόντοι κατά', type: 'number' },
       { key: 'points', label: 'Βαθμοί', type: 'number' },
+      { key: 'logo', label: 'Λογότυπο ομάδας', type: 'image', folder: 'teams' },
       { key: 'form', label: 'Φόρμα (π.χ. W,W,L,W,L)', type: 'wl' },
       { key: 'isOurs', label: 'Είναι η ομάδα μας', type: 'checkbox' },
     ],
-    defaults: { pos: 1, team: '', played: 0, wins: 0, losses: 0, pointsFor: 0, pointsAgainst: 0, points: 0, form: [], isOurs: false },
+    defaults: { pos: 1, team: '', played: 0, wins: 0, losses: 0, pointsFor: 0, pointsAgainst: 0, points: 0, logo: null, form: [], isOurs: false },
   },
 
   upcoming: {
@@ -62,13 +63,13 @@ export const collectionSchemas = {
     ],
     fields: [
       { key: 'opponent', label: 'Αντίπαλος', type: 'text', required: true },
+      { key: 'category', label: 'Διοργάνωση (π.χ. S.Master)', type: 'text' },
       { key: 'datetime', label: 'Ημερομηνία', type: 'datetime', required: true },
       { key: 'home', label: 'Εντός έδρας', type: 'checkbox' },
       { key: 'scoreFor', label: 'Πόντοι Spacers', type: 'number', required: true },
       { key: 'scoreAgainst', label: 'Πόντοι αντιπάλου', type: 'number', required: true },
-      { key: 'recapUrl', label: 'Recap URL', type: 'text' },
     ],
-    defaults: { opponent: '', datetime: new Date().toISOString(), home: true, scoreFor: 0, scoreAgainst: 0, recapUrl: '' },
+    defaults: { opponent: '', category: '', datetime: new Date().toISOString(), home: true, scoreFor: 0, scoreAgainst: 0 },
   },
 
   players: {
@@ -81,7 +82,7 @@ export const collectionSchemas = {
     ],
     fields: [
       { key: 'name', label: 'Ονοματεπώνυμο', type: 'text', required: true },
-      { key: 'photo', label: 'Φωτογραφία URL', type: 'text' },
+      { key: 'photo', label: 'Φωτογραφία', type: 'image', folder: 'players' },
       { key: 'games', label: 'Αγώνες', type: 'number' },
       { key: 'points', label: 'Σύνολο πόντων', type: 'number' },
       { key: 'ppg', label: 'Πόντοι / αγώνα', type: 'number' },
@@ -103,7 +104,7 @@ export const collectionSchemas = {
         { value: 'bronze', label: 'Bronze' },
       ] },
       { key: 'url', label: 'Website URL', type: 'text' },
-      { key: 'logo', label: 'Logo URL', type: 'text' },
+      { key: 'logo', label: 'Λογότυπο', type: 'image', folder: 'sponsors' },
     ],
     defaults: { name: '', tier: 'bronze', url: '', logo: null },
   },
@@ -123,7 +124,7 @@ export const collectionSchemas = {
       { key: 'scoreFor', label: 'Πόντοι Spacers', type: 'number' },
       { key: 'scoreAgainst', label: 'Πόντοι αντιπάλου', type: 'number' },
       { key: 'won', label: 'Νίκη', type: 'checkbox' },
-      { key: 'opponentLogo', label: 'Logo αντιπάλου (URL)', type: 'text' },
+      { key: 'opponentLogo', label: 'Λογότυπο αντιπάλου', type: 'image', folder: 'teams' },
     ],
     defaults: { opponent: '', date: new Date().toISOString(), youtubeId: '', home: true, scoreFor: 0, scoreAgainst: 0, won: true, opponentLogo: '' },
   },

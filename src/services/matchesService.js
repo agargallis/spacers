@@ -1,6 +1,7 @@
 import { contentRepository } from './contentRepository';
 import { getLive } from './liveContent';
 import { resolveItems } from './overrides';
+import { withResultIds } from './resultsService';
 import { resolve, assertTeam } from './_client';
 
 const byDateAsc = (a, b) => new Date(a.datetime) - new Date(b.datetime);
@@ -8,6 +9,8 @@ const byDateDesc = (a, b) => new Date(b.datetime) - new Date(a.datetime);
 
 const upcomingList = (team) =>
   resolveItems(team, 'upcoming', getLive(team, 'upcoming') ?? contentRepository.getCollection('upcoming', team));
+const resultsList = (team) =>
+  resolveItems(team, 'results', withResultIds(team, getLive(team, 'results') ?? contentRepository.getCollection('results', team)));
 
 /** Upcoming fixtures for the active team, soonest first. */
 export async function getUpcomingMatches(team) {
@@ -24,13 +27,12 @@ export async function getNextMatch(team) {
   assertTeam(team);
   const now = Date.now();
 
-  const upcoming = contentRepository
-    .getCollection('upcoming', team)
-    .filter((m) => new Date(m.datetime).getTime() >= now)
+  const upcoming = [...upcomingList(team)]
+    .filter((m) => !m._hidden && new Date(m.datetime).getTime() >= now)
     .sort(byDateAsc)[0];
   if (upcoming) return resolve(upcoming);
 
-  const last = contentRepository.getCollection('results', team).sort(byDateDesc)[0];
+  const last = [...resultsList(team)].filter((r) => !r._hidden).sort(byDateDesc)[0];
   if (!last) return resolve(null);
 
   return resolve({

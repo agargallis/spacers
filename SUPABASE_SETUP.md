@@ -71,6 +71,22 @@ create policy "public read"  on meta           for select using (true);
 create policy "admin write"  on manual_content for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 create policy "admin write"  on overrides      for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 -- content + meta are written by the Edge Function via the service_role key
+
+-- Realtime: broadcast row changes to every open client so admin edits + the
+-- 2-min scrape appear LIVE with no refresh. (Tables are NOT realtime by default.)
+alter publication supabase_realtime add table overrides;
+alter publication supabase_realtime add table content;
+alter publication supabase_realtime add table manual_content;
+-- If a table is already a member you'll get "already member of publication" —
+-- that's fine, it means realtime is already on for it.
+
+-- Storage: public bucket for admin-uploaded images (player photos, logos…).
+insert into storage.buckets (id, name, public) values ('media', 'media', true)
+  on conflict (id) do nothing;
+create policy "media public read"  on storage.objects for select using (bucket_id = 'media');
+create policy "media admin upload" on storage.objects for insert to authenticated with check (bucket_id = 'media');
+create policy "media admin update" on storage.objects for update to authenticated using (bucket_id = 'media');
+create policy "media admin delete" on storage.objects for delete to authenticated using (bucket_id = 'media');
 ```
 
 Admin auth: create one Supabase Auth user (email/password) for the admin login

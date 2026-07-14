@@ -1,4 +1,5 @@
 import { Input, Textarea, Select, Checkbox } from '../ui/Field';
+import ImageField from './ImageField';
 
 const pad = (n) => String(n).padStart(2, '0');
 const toDatetimeInput = (iso) => {
@@ -79,6 +80,8 @@ export default function CrudField({ field, value, onChange }) {
           }
         />
       );
+    case 'image':
+      return <ImageField field={field} value={value} onChange={set} />;
     case 'textarea':
       return <Textarea id={field.key} label={field.label} value={value ?? ''} onChange={(e) => set(e.target.value)} />;
     default:

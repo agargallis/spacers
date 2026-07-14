@@ -29,12 +29,12 @@ export default function Editable({ collection, schema, item, children, className
       </div>
 
       {custom && !hidden && (
-        <span className="absolute left-1.5 top-1.5 z-30 rounded bg-accent px-1.5 py-0.5 text-[9px] font-bold uppercase text-white">
+        <span className="pointer-events-none absolute -top-2 left-3 z-30 rounded-full bg-accent px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white shadow-md ring-2 ring-[color:var(--bg)]">
           Custom
         </span>
       )}
       {hidden && (
-        <span className="absolute left-1.5 top-1.5 z-30 rounded bg-rose-500 px-1.5 py-0.5 text-[9px] font-bold uppercase text-white">
+        <span className="pointer-events-none absolute -top-2 left-3 z-30 rounded-full bg-rose-500 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white shadow-md ring-2 ring-[color:var(--bg)]">
           Κρυφό
         </span>
       )}

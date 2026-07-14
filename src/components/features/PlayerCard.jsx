@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { initials } from '../../utils/format';
 import { useActiveTeamMeta } from '../../store/useTeamStore';
 
@@ -6,6 +6,10 @@ import { useActiveTeamMeta } from '../../store/useTeamStore';
 export default function PlayerCard({ player, onClick }) {
   const meta = useActiveTeamMeta();
   const [imgOk, setImgOk] = useState(true);
+
+  // Retry the image whenever the photo changes (e.g. admin uploads a new one),
+  // otherwise a previously-broken CDN photo would keep the card on initials.
+  useEffect(() => setImgOk(true), [player.photo]);
 
   return (
     <button

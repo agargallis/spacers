@@ -44,13 +44,13 @@ export default function VideoSection() {
 
   return (
     <Section id="video">
-      <SectionHeading eyebrow="Video" title="Δες τις αναμετρήσεις μας!" />
+      <SectionHeading id="video" eyebrow="Video" title="Δες τις αναμετρήσεις μας!" />
 
       {loading ? (
         <Spinner label="Φόρτωση video…" />
       ) : list.length ? (
         <div className="mx-auto max-w-2xl">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pt-3">
             <div
               className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
               style={{ transform: `translateX(-${i * 100}%)` }}

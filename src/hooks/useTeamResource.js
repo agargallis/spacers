@@ -19,10 +19,17 @@ export function useTeamResource(serviceFn, { initialData = null } = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const reqId = useRef(0);
+  const prevTeam = useRef(activeTeam);
+  const loadedOnce = useRef(false);
 
   useEffect(() => {
     const id = ++reqId.current;
-    setLoading(true);
+    // Stale-while-revalidate: show the spinner only on the first load or a team
+    // switch. Revision bumps (admin edits / realtime) refetch silently in the
+    // background so live updates swap in without a jarring spinner flash.
+    const teamChanged = prevTeam.current !== activeTeam;
+    if (!loadedOnce.current || teamChanged) setLoading(true);
+    prevTeam.current = activeTeam;
     setError(null);
 
     serviceFn(activeTeam)
@@ -30,6 +37,7 @@ export function useTeamResource(serviceFn, { initialData = null } = {}) {
         if (id === reqId.current) {
           setData(result);
           setLoading(false);
+          loadedOnce.current = true;
         }
       })
       .catch((err) => {

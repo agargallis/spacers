@@ -15,9 +15,12 @@ const cols = [
   { key: 'points', label: 'Βαθ', className: 'w-14 text-center' },
 ];
 
-export default function StandingsTable({ rows = [] }) {
+export default function StandingsTable({ rows = [], collection = null }) {
   const meta = useActiveTeamMeta();
   const editMode = useEditMode((s) => s.editMode);
+  // Controls only for editable tables (current or admin-added season), not
+  // read-only scraped past seasons.
+  const editable = editMode && !!collection;
 
   return (
     <div className="overflow-x-auto rounded-2xl card">
@@ -32,7 +35,7 @@ export default function StandingsTable({ rows = [] }) {
                 {c.label}
               </th>
             ))}
-            {editMode && <th className="w-28 px-3 py-3.5" />}
+            {editable && <th className="w-28 px-3 py-3.5" />}
           </tr>
         </thead>
         <tbody>
@@ -104,9 +107,9 @@ export default function StandingsTable({ rows = [] }) {
                     {row.points}
                   </span>
                 </td>
-                {editMode && (
+                {editable && (
                   <td className="px-3 py-3.5 text-right">
-                    <ItemControls collection="standings" schema="standings" item={row} />
+                    <ItemControls collection={collection} schema="standings" item={row} />
                   </td>
                 )}
               </motion.tr>

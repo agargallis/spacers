@@ -13,7 +13,7 @@ export default function SponsorsSection() {
 
   return (
     <Section id="sponsors">
-      <SectionHeading eyebrow="Partners" title="Οι χορηγοί μας." />
+      <SectionHeading id="sponsors" eyebrow="Partners" title="Οι χορηγοί μας." />
 
       <motion.div
         variants={stagger(0.1)}
@@ -29,7 +29,7 @@ export default function SponsorsSection() {
         ))}
       </motion.div>
 
-      <AddButton collection="sponsors" schema="sponsors" label="χορηγό" className="mt-6" />
+      <AddButton collection="sponsors" schema="sponsors" label="χορηγού" className="mt-6" />
     </Section>
   );
 }

@@ -56,6 +56,7 @@ export default function ContactSection() {
   return (
     <Section id="contact">
       <SectionHeading
+        id="contact"
         eyebrow="Επικοινωνία"
         title="Έλα στην ομάδα!"
         description="Χορηγός, νέος παίκτης, προπονητής ή απλά μια πρόταση, διάλεξε και γράψε μας."

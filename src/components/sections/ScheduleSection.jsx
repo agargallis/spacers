@@ -4,31 +4,29 @@ import SectionHeading from '../ui/SectionHeading';
 import MatchCard from '../features/MatchCard';
 import Editable from '../admin/Editable';
 import AddButton from '../admin/AddButton';
+import EditableLeague from '../admin/EditableLeague';
 import Spinner from '../ui/Spinner';
 import { useTeamResource } from '../../hooks/useTeamResource';
 import { getUpcomingMatches } from '../../services/matchesService';
 import { getResults } from '../../services/resultsService';
 import { stagger } from '../../utils/motion';
-import { useActiveTeamMeta } from '../../store/useTeamStore';
 import { useEditMode } from '../../store/useEditMode';
 
 export default function ScheduleSection() {
   const { data: matches, loading, activeTeam } = useTeamResource(getUpcomingMatches, { initialData: [] });
   const { data: results } = useTeamResource(getResults, { initialData: [] });
-  const meta = useActiveTeamMeta();
   const editMode = useEditMode((s) => s.editMode);
 
   // No venue in the results feed → show a plain "Έδρα" placeholder.
   const recent = (results ?? []).slice(0, 3).map((r) => ({ ...r, venue: r.venue || 'Έδρα' }));
-  // In edit mode always show the (addable) upcoming grid, even when empty.
-  const showUpcoming = editMode || !!matches?.length;
+  const hasUpcoming = !!matches?.length;
 
   return (
     <Section id="schedule">
-      <SectionHeading eyebrow={meta.league} title="Πρόγραμμα αγώνων." />
+      <SectionHeading id="schedule" eyebrow={<EditableLeague />} title="Πρόγραμμα αγώνων." />
       {loading ? (
         <Spinner label="Φόρτωση προγράμματος…" />
-      ) : showUpcoming ? (
+      ) : hasUpcoming ? (
         <>
           <AnimatePresence mode="wait">
             <motion.div
@@ -39,7 +37,7 @@ export default function ScheduleSection() {
               viewport={{ once: true, margin: '-60px' }}
               className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
-              {(matches ?? []).map((m) => (
+              {matches.map((m) => (
                 <Editable key={m.id} collection="upcoming" schema="upcoming" item={m}>
                   <MatchCard match={m} />
                 </Editable>
@@ -49,7 +47,9 @@ export default function ScheduleSection() {
           <AddButton collection="upcoming" schema="upcoming" label="αγώνα" className="mt-6" />
         </>
       ) : (
-        <div>
+        <>
+          {/* No upcoming fixtures → show recent games (both on the public site and
+              in the admin, so the schedule is never empty in edit mode). */}
           <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--text-faint)]">
             Τελευταίοι αγώνες
           </p>
@@ -58,7 +58,8 @@ export default function ScheduleSection() {
               <MatchCard key={r.id} match={r} />
             ))}
           </motion.div>
-        </div>
+          {editMode && <AddButton collection="upcoming" schema="upcoming" label="αγώνα" className="mt-6" />}
+        </>
       )}
     </Section>
   );

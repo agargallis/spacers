@@ -36,7 +36,7 @@ export default function OverviewSection() {
 
         {/* Recent results snapshot */}
         <section>
-          <SectionHeading eyebrow="Πρόσφατα" title="Τελευταία αποτελέσματα." />
+          <SectionHeading id="overview-recent" eyebrow="Πρόσφατα" title="Τελευταία αποτελέσματα." />
           <motion.div variants={stagger(0.07)} initial="hidden" animate="show" className="space-y-3">
             {recent.length ? (
               recent.map((r) => (

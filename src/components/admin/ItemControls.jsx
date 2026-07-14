@@ -77,7 +77,7 @@ export default function ItemControls({ collection, schema, item, className = '' 
       >
         <form id="item-controls-form" onSubmit={saveEdit} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {fields.map((f) => (
-            <div key={f.key} className={f.type === 'textarea' || f.type === 'wl' ? 'sm:col-span-2' : ''}>
+            <div key={f.key} className={['textarea', 'wl', 'image'].includes(f.type) ? 'sm:col-span-2' : ''}>
               <CrudField field={f} value={draft[f.key]} onChange={(k, v) => setDraft((d) => ({ ...d, [k]: v }))} />
             </div>
           ))}

@@ -4,8 +4,38 @@ import { resolveItems } from './overrides';
 import { resolve, assertTeam } from './_client';
 
 const byDateDesc = (a, b) => new Date(b.datetime) - new Date(a.datetime);
+
+const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const slug = (s) => norm(s).replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+/**
+ * Deterministic result id from date + opponent — stable across scrapes even if
+ * basketaki inserts an older game (unlike the previous index-based ids). Admin
+ * added rows keep their own `custom-…` id. Same-day, same-opponent duplicates
+ * get a numeric suffix.
+ */
+export function withResultIds(team, list) {
+  const seen = new Map();
+  return (Array.isArray(list) ? list : []).map((r) => {
+    let id =
+      typeof r.id === 'string' && r.id.startsWith('custom-')
+        ? r.id
+        : `res-${team}-${String(r.datetime || '').slice(0, 10)}-${slug(r.opponent)}`;
+    const n = (seen.get(id) || 0) + 1;
+    seen.set(id, n);
+    if (n > 1) id = `${id}-${n}`;
+    return { ...r, id };
+  });
+}
+
 const results = (team) =>
-  [...resolveItems(team, 'results', getLive(team, 'results') ?? contentRepository.getCollection('results', team))];
+  [
+    ...resolveItems(
+      team,
+      'results',
+      withResultIds(team, getLive(team, 'results') ?? contentRepository.getCollection('results', team)),
+    ),
+  ];
 
 /** Past results for the active team, most recent first. */
 export async function getResults(team) {

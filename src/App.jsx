@@ -39,6 +39,9 @@ export default function App() {
     <>
       {!isAdmin && <IntroSplash />}
       <ScrollToTop />
+      {/* Public pages get the back-to-top button via PublicLayout; the standalone
+          admin page has its own chrome, so render it here too. */}
+      {isAdmin && <ScrollToTopButton />}
       <Routes>
         {/* Admin is standalone (secret path) — its own chrome */}
         <Route path="/ndbajcksd" element={<AdminPage />} />

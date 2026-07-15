@@ -2,7 +2,6 @@
   "name": "Spacers Athens",
   "short_name": "Spacers",
   "description": "Spacers Athens | Επίσημη ιστοσελίδα της μπασκετικής ομάδας — βαθμολογίες, πρόγραμμα, αποτελέσματα.",
-  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
